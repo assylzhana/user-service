@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: user-service-go
     ports:
-      - "50051:50051"  
+      - "7007:50051"  
     environment:
       POSTGRES_HOST: 46.101.215.10
       POSTGRES_PORT: 5432
