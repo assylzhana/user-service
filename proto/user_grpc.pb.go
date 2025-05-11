@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,11 +35,11 @@ const (
 type UserServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
-	DeleteAccount(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeleteAccount(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MessageResponse, error)
 	EditAccount(ctx context.Context, in *EditUserRequest, opts ...grpc.CallOption) (*MessageResponse, error)
-	Logout(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	Logout(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MessageResponse, error)
 	GetUserById(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	GetAllUsers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*UsersResponse, error)
+	GetAllUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UsersResponse, error)
 }
 
 type userServiceClient struct {
@@ -69,7 +70,7 @@ func (c *userServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *userServiceClient) DeleteAccount(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *userServiceClient) DeleteAccount(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MessageResponse)
 	err := c.cc.Invoke(ctx, UserService_DeleteAccount_FullMethodName, in, out, cOpts...)
@@ -89,7 +90,7 @@ func (c *userServiceClient) EditAccount(ctx context.Context, in *EditUserRequest
 	return out, nil
 }
 
-func (c *userServiceClient) Logout(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *userServiceClient) Logout(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MessageResponse)
 	err := c.cc.Invoke(ctx, UserService_Logout_FullMethodName, in, out, cOpts...)
@@ -109,7 +110,7 @@ func (c *userServiceClient) GetUserById(ctx context.Context, in *UserIdRequest, 
 	return out, nil
 }
 
-func (c *userServiceClient) GetAllUsers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*UsersResponse, error) {
+func (c *userServiceClient) GetAllUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UsersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UsersResponse)
 	err := c.cc.Invoke(ctx, UserService_GetAllUsers_FullMethodName, in, out, cOpts...)
@@ -125,11 +126,11 @@ func (c *userServiceClient) GetAllUsers(ctx context.Context, in *Empty, opts ...
 type UserServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*AuthResponse, error)
 	Login(context.Context, *LoginRequest) (*AuthResponse, error)
-	DeleteAccount(context.Context, *UserIdRequest) (*MessageResponse, error)
+	DeleteAccount(context.Context, *emptypb.Empty) (*MessageResponse, error)
 	EditAccount(context.Context, *EditUserRequest) (*MessageResponse, error)
-	Logout(context.Context, *UserIdRequest) (*MessageResponse, error)
+	Logout(context.Context, *emptypb.Empty) (*MessageResponse, error)
 	GetUserById(context.Context, *UserIdRequest) (*UserResponse, error)
-	GetAllUsers(context.Context, *Empty) (*UsersResponse, error)
+	GetAllUsers(context.Context, *emptypb.Empty) (*UsersResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -146,19 +147,19 @@ func (UnimplementedUserServiceServer) Register(context.Context, *RegisterRequest
 func (UnimplementedUserServiceServer) Login(context.Context, *LoginRequest) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedUserServiceServer) DeleteAccount(context.Context, *UserIdRequest) (*MessageResponse, error) {
+func (UnimplementedUserServiceServer) DeleteAccount(context.Context, *emptypb.Empty) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
 func (UnimplementedUserServiceServer) EditAccount(context.Context, *EditUserRequest) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditAccount not implemented")
 }
-func (UnimplementedUserServiceServer) Logout(context.Context, *UserIdRequest) (*MessageResponse, error) {
+func (UnimplementedUserServiceServer) Logout(context.Context, *emptypb.Empty) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
 func (UnimplementedUserServiceServer) GetUserById(context.Context, *UserIdRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserById not implemented")
 }
-func (UnimplementedUserServiceServer) GetAllUsers(context.Context, *Empty) (*UsersResponse, error) {
+func (UnimplementedUserServiceServer) GetAllUsers(context.Context, *emptypb.Empty) (*UsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllUsers not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
@@ -219,7 +220,7 @@ func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _UserService_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserIdRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -231,7 +232,7 @@ func _UserService_DeleteAccount_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: UserService_DeleteAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).DeleteAccount(ctx, req.(*UserIdRequest))
+		return srv.(UserServiceServer).DeleteAccount(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -255,7 +256,7 @@ func _UserService_EditAccount_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _UserService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserIdRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -267,7 +268,7 @@ func _UserService_Logout_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: UserService_Logout_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).Logout(ctx, req.(*UserIdRequest))
+		return srv.(UserServiceServer).Logout(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -291,7 +292,7 @@ func _UserService_GetUserById_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _UserService_GetAllUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -303,7 +304,7 @@ func _UserService_GetAllUsers_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: UserService_GetAllUsers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).GetAllUsers(ctx, req.(*Empty))
+		return srv.(UserServiceServer).GetAllUsers(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

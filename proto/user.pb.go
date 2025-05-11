@@ -9,6 +9,7 @@ package proto
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -143,10 +144,7 @@ func (x *LoginRequest) GetPassword() string {
 
 type EditUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	RoleId        int32                  `protobuf:"varint,4,opt,name=role_id,json=roleId,proto3" json:"role_id,omitempty"`
+	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -181,32 +179,11 @@ func (*EditUserRequest) Descriptor() ([]byte, []int) {
 	return file_user_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *EditUserRequest) GetUserId() int32 {
+func (x *EditUserRequest) GetPassword() string {
 	if x != nil {
-		return x.UserId
-	}
-	return 0
-}
-
-func (x *EditUserRequest) GetUsername() string {
-	if x != nil {
-		return x.Username
+		return x.Password
 	}
 	return ""
-}
-
-func (x *EditUserRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
-
-func (x *EditUserRequest) GetRoleId() int32 {
-	if x != nil {
-		return x.RoleId
-	}
-	return 0
 }
 
 type UserIdRequest struct {
@@ -253,50 +230,6 @@ func (x *UserIdRequest) GetUserId() int32 {
 	return 0
 }
 
-type AuthResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AuthResponse) Reset() {
-	*x = AuthResponse{}
-	mi := &file_user_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AuthResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AuthResponse) ProtoMessage() {}
-
-func (x *AuthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AuthResponse.ProtoReflect.Descriptor instead.
-func (*AuthResponse) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *AuthResponse) GetAccessToken() string {
-	if x != nil {
-		return x.AccessToken
-	}
-	return ""
-}
-
 type MessageResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
@@ -306,7 +239,7 @@ type MessageResponse struct {
 
 func (x *MessageResponse) Reset() {
 	*x = MessageResponse{}
-	mi := &file_user_proto_msgTypes[5]
+	mi := &file_user_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -318,7 +251,7 @@ func (x *MessageResponse) String() string {
 func (*MessageResponse) ProtoMessage() {}
 
 func (x *MessageResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[5]
+	mi := &file_user_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -331,7 +264,7 @@ func (x *MessageResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessageResponse.ProtoReflect.Descriptor instead.
 func (*MessageResponse) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{5}
+	return file_user_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *MessageResponse) GetMessage() string {
@@ -341,27 +274,28 @@ func (x *MessageResponse) GetMessage() string {
 	return ""
 }
 
-type Empty struct {
+type AuthResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Empty) Reset() {
-	*x = Empty{}
-	mi := &file_user_proto_msgTypes[6]
+func (x *AuthResponse) Reset() {
+	*x = AuthResponse{}
+	mi := &file_user_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Empty) String() string {
+func (x *AuthResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Empty) ProtoMessage() {}
+func (*AuthResponse) ProtoMessage() {}
 
-func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[6]
+func (x *AuthResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_user_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,9 +306,16 @@ func (x *Empty) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
-func (*Empty) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{6}
+// Deprecated: Use AuthResponse.ProtoReflect.Descriptor instead.
+func (*AuthResponse) Descriptor() ([]byte, []int) {
+	return file_user_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AuthResponse) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
 }
 
 type UserResponse struct {
@@ -389,7 +330,7 @@ type UserResponse struct {
 
 func (x *UserResponse) Reset() {
 	*x = UserResponse{}
-	mi := &file_user_proto_msgTypes[7]
+	mi := &file_user_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -401,7 +342,7 @@ func (x *UserResponse) String() string {
 func (*UserResponse) ProtoMessage() {}
 
 func (x *UserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[7]
+	mi := &file_user_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -414,7 +355,7 @@ func (x *UserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserResponse.ProtoReflect.Descriptor instead.
 func (*UserResponse) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{7}
+	return file_user_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UserResponse) GetId() int32 {
@@ -454,7 +395,7 @@ type UsersResponse struct {
 
 func (x *UsersResponse) Reset() {
 	*x = UsersResponse{}
-	mi := &file_user_proto_msgTypes[8]
+	mi := &file_user_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -466,7 +407,7 @@ func (x *UsersResponse) String() string {
 func (*UsersResponse) ProtoMessage() {}
 
 func (x *UsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[8]
+	mi := &file_user_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -479,7 +420,7 @@ func (x *UsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UsersResponse.ProtoReflect.Descriptor instead.
 func (*UsersResponse) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{8}
+	return file_user_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UsersResponse) GetUsers() []*UserResponse {
@@ -494,7 +435,7 @@ var File_user_proto protoreflect.FileDescriptor
 const file_user_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"user.proto\x12\x05proto\"x\n" +
+	"user.proto\x12\x05proto\x1a\x1bgoogle/protobuf/empty.proto\"x\n" +
 	"\x0fRegisterRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
@@ -502,34 +443,30 @@ const file_user_proto_rawDesc = "" +
 	"\arole_id\x18\x04 \x01(\x05R\x06roleId\"F\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"u\n" +
-	"\x0fEditUserRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\x12\x17\n" +
-	"\arole_id\x18\x04 \x01(\x05R\x06roleId\"(\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"-\n" +
+	"\x0fEditUserRequest\x12\x1a\n" +
+	"\bpassword\x18\x01 \x01(\tR\bpassword\"(\n" +
 	"\rUserIdRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x05R\x06userId\"1\n" +
-	"\fAuthResponse\x12!\n" +
-	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"+\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\"+\n" +
 	"\x0fMessageResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\a\n" +
-	"\x05Empty\"i\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"1\n" +
+	"\fAuthResponse\x12!\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"i\n" +
 	"\fUserResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x17\n" +
 	"\arole_id\x18\x04 \x01(\x05R\x06roleId\":\n" +
 	"\rUsersResponse\x12)\n" +
-	"\x05users\x18\x01 \x03(\v2\x13.proto.UserResponseR\x05users2\x9c\x03\n" +
+	"\x05users\x18\x01 \x03(\v2\x13.proto.UserResponseR\x05users2\xaa\x03\n" +
 	"\vUserService\x127\n" +
 	"\bRegister\x12\x16.proto.RegisterRequest\x1a\x13.proto.AuthResponse\x121\n" +
-	"\x05Login\x12\x13.proto.LoginRequest\x1a\x13.proto.AuthResponse\x12=\n" +
-	"\rDeleteAccount\x12\x14.proto.UserIdRequest\x1a\x16.proto.MessageResponse\x12=\n" +
-	"\vEditAccount\x12\x16.proto.EditUserRequest\x1a\x16.proto.MessageResponse\x126\n" +
-	"\x06Logout\x12\x14.proto.UserIdRequest\x1a\x16.proto.MessageResponse\x128\n" +
-	"\vGetUserById\x12\x14.proto.UserIdRequest\x1a\x13.proto.UserResponse\x121\n" +
-	"\vGetAllUsers\x12\f.proto.Empty\x1a\x14.proto.UsersResponseB\x1dZ\x1buser-service-go/proto;protob\x06proto3"
+	"\x05Login\x12\x13.proto.LoginRequest\x1a\x13.proto.AuthResponse\x12?\n" +
+	"\rDeleteAccount\x12\x16.google.protobuf.Empty\x1a\x16.proto.MessageResponse\x12=\n" +
+	"\vEditAccount\x12\x16.proto.EditUserRequest\x1a\x16.proto.MessageResponse\x128\n" +
+	"\x06Logout\x12\x16.google.protobuf.Empty\x1a\x16.proto.MessageResponse\x128\n" +
+	"\vGetUserById\x12\x14.proto.UserIdRequest\x1a\x13.proto.UserResponse\x12;\n" +
+	"\vGetAllUsers\x12\x16.google.protobuf.Empty\x1a\x14.proto.UsersResponseB\x17Z\x15user-service-go/protob\x06proto3"
 
 var (
 	file_user_proto_rawDescOnce sync.Once
@@ -543,34 +480,34 @@ func file_user_proto_rawDescGZIP() []byte {
 	return file_user_proto_rawDescData
 }
 
-var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_user_proto_goTypes = []any{
 	(*RegisterRequest)(nil), // 0: proto.RegisterRequest
 	(*LoginRequest)(nil),    // 1: proto.LoginRequest
 	(*EditUserRequest)(nil), // 2: proto.EditUserRequest
 	(*UserIdRequest)(nil),   // 3: proto.UserIdRequest
-	(*AuthResponse)(nil),    // 4: proto.AuthResponse
-	(*MessageResponse)(nil), // 5: proto.MessageResponse
-	(*Empty)(nil),           // 6: proto.Empty
-	(*UserResponse)(nil),    // 7: proto.UserResponse
-	(*UsersResponse)(nil),   // 8: proto.UsersResponse
+	(*MessageResponse)(nil), // 4: proto.MessageResponse
+	(*AuthResponse)(nil),    // 5: proto.AuthResponse
+	(*UserResponse)(nil),    // 6: proto.UserResponse
+	(*UsersResponse)(nil),   // 7: proto.UsersResponse
+	(*emptypb.Empty)(nil),   // 8: google.protobuf.Empty
 }
 var file_user_proto_depIdxs = []int32{
-	7, // 0: proto.UsersResponse.users:type_name -> proto.UserResponse
+	6, // 0: proto.UsersResponse.users:type_name -> proto.UserResponse
 	0, // 1: proto.UserService.Register:input_type -> proto.RegisterRequest
 	1, // 2: proto.UserService.Login:input_type -> proto.LoginRequest
-	3, // 3: proto.UserService.DeleteAccount:input_type -> proto.UserIdRequest
+	8, // 3: proto.UserService.DeleteAccount:input_type -> google.protobuf.Empty
 	2, // 4: proto.UserService.EditAccount:input_type -> proto.EditUserRequest
-	3, // 5: proto.UserService.Logout:input_type -> proto.UserIdRequest
+	8, // 5: proto.UserService.Logout:input_type -> google.protobuf.Empty
 	3, // 6: proto.UserService.GetUserById:input_type -> proto.UserIdRequest
-	6, // 7: proto.UserService.GetAllUsers:input_type -> proto.Empty
-	4, // 8: proto.UserService.Register:output_type -> proto.AuthResponse
-	4, // 9: proto.UserService.Login:output_type -> proto.AuthResponse
-	5, // 10: proto.UserService.DeleteAccount:output_type -> proto.MessageResponse
-	5, // 11: proto.UserService.EditAccount:output_type -> proto.MessageResponse
-	5, // 12: proto.UserService.Logout:output_type -> proto.MessageResponse
-	7, // 13: proto.UserService.GetUserById:output_type -> proto.UserResponse
-	8, // 14: proto.UserService.GetAllUsers:output_type -> proto.UsersResponse
+	8, // 7: proto.UserService.GetAllUsers:input_type -> google.protobuf.Empty
+	5, // 8: proto.UserService.Register:output_type -> proto.AuthResponse
+	5, // 9: proto.UserService.Login:output_type -> proto.AuthResponse
+	4, // 10: proto.UserService.DeleteAccount:output_type -> proto.MessageResponse
+	4, // 11: proto.UserService.EditAccount:output_type -> proto.MessageResponse
+	4, // 12: proto.UserService.Logout:output_type -> proto.MessageResponse
+	6, // 13: proto.UserService.GetUserById:output_type -> proto.UserResponse
+	7, // 14: proto.UserService.GetAllUsers:output_type -> proto.UsersResponse
 	8, // [8:15] is the sub-list for method output_type
 	1, // [1:8] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -589,7 +526,7 @@ func file_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_proto_rawDesc), len(file_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
