@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "user-service-go/proto;proto";
+
+service UserService {
+  rpc Register(RegisterRequest) returns (AuthResponse);
+  rpc Login(LoginRequest) returns (AuthResponse);
+  rpc DeleteAccount(UserIdRequest) returns (MessageResponse);
+  rpc EditAccount(EditUserRequest) returns (MessageResponse);
+}
+
+message RegisterRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  int32 role_id = 4;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message EditUserRequest {
+  int32 user_id = 1;
+  string username = 2;
+  string email = 3;
+  int32 role_id = 4;
+}
+
+message UserIdRequest {
+  int32 user_id = 1;
+}
+
+message AuthResponse {
+  string access_token = 1;
+}
+
+message MessageResponse {
+  string message = 1;
+}

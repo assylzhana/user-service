@@ -2,11 +2,13 @@ package main
 
 import (
 	"log"
+	"net"
 	"user-service-go/config"
-	"user-service-go/routes"
+	"user-service-go/proto"
+	"user-service-go/server"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -17,10 +19,16 @@ func main() {
 
 	config.Connect()
 
-	r := gin.Default()
-	routes.UserRoutes(r)
+	lis, err := net.Listen("tcp", ":50051")
+	if err != nil {
+		log.Fatalf("Failed to listen: %v", err)
+	}
 
-	if err := r.Run(":8080"); err != nil {
-		log.Fatal("Error starting server: ", err)
+	grpcServer := grpc.NewServer()
+	proto.RegisterUserServiceServer(grpcServer, &server.UserServiceServer{})
+
+	log.Println("gRPC server listening on :50051")
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("Failed to serve: %v", err)
 	}
 }
