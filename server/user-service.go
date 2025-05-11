@@ -37,6 +37,10 @@ func extractAndValidateToken(ctx context.Context) (*utils.Claims, error) {
 }
 
 func (s *UserServiceServer) Register(ctx context.Context, req *proto.RegisterRequest) (*proto.AuthResponse, error) {
+	if len(req.Password) < 8 {
+		return nil, status.Errorf(codes.InvalidArgument, "Password must be at least 8 characters long")
+	}
+
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Password hashing failed")
@@ -110,8 +114,8 @@ func (s *UserServiceServer) EditAccount(ctx context.Context, req *proto.EditUser
 
 	log.Printf("Password received: '%s'", req.Password)
 
-	if strings.TrimSpace(req.Password) == "" {
-		return nil, status.Errorf(codes.InvalidArgument, "Password is required")
+	if len(strings.TrimSpace(req.Password)) < 8 {
+		return nil, status.Errorf(codes.InvalidArgument, "Password must be at least 8 characters long")
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
