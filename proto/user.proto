@@ -9,6 +9,9 @@ service UserService {
   rpc Login(LoginRequest) returns (AuthResponse);
   rpc DeleteAccount(UserIdRequest) returns (MessageResponse);
   rpc EditAccount(EditUserRequest) returns (MessageResponse);
+  rpc Logout(UserIdRequest) returns (MessageResponse);
+  rpc GetUserById(UserIdRequest) returns (UserResponse);
+  rpc GetAllUsers(Empty) returns (UsersResponse);
 }
 
 message RegisterRequest {
@@ -40,4 +43,17 @@ message AuthResponse {
 
 message MessageResponse {
   string message = 1;
+}
+
+message Empty {}
+
+message UserResponse {
+  int32 id = 1;
+  string username = 2;
+  string email = 3;
+  int32 role_id = 4;
+}
+
+message UsersResponse {
+  repeated UserResponse users = 1;
 }

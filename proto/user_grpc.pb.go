@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.30.2
-// source: proto/user.proto
+// source: user.proto
 
 package proto
 
@@ -23,6 +23,9 @@ const (
 	UserService_Login_FullMethodName         = "/proto.UserService/Login"
 	UserService_DeleteAccount_FullMethodName = "/proto.UserService/DeleteAccount"
 	UserService_EditAccount_FullMethodName   = "/proto.UserService/EditAccount"
+	UserService_Logout_FullMethodName        = "/proto.UserService/Logout"
+	UserService_GetUserById_FullMethodName   = "/proto.UserService/GetUserById"
+	UserService_GetAllUsers_FullMethodName   = "/proto.UserService/GetAllUsers"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -33,6 +36,9 @@ type UserServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	DeleteAccount(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 	EditAccount(ctx context.Context, in *EditUserRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	Logout(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	GetUserById(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*UserResponse, error)
+	GetAllUsers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*UsersResponse, error)
 }
 
 type userServiceClient struct {
@@ -83,6 +89,36 @@ func (c *userServiceClient) EditAccount(ctx context.Context, in *EditUserRequest
 	return out, nil
 }
 
+func (c *userServiceClient) Logout(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, UserService_Logout_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) GetUserById(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserResponse)
+	err := c.cc.Invoke(ctx, UserService_GetUserById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) GetAllUsers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*UsersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UsersResponse)
+	err := c.cc.Invoke(ctx, UserService_GetAllUsers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -91,6 +127,9 @@ type UserServiceServer interface {
 	Login(context.Context, *LoginRequest) (*AuthResponse, error)
 	DeleteAccount(context.Context, *UserIdRequest) (*MessageResponse, error)
 	EditAccount(context.Context, *EditUserRequest) (*MessageResponse, error)
+	Logout(context.Context, *UserIdRequest) (*MessageResponse, error)
+	GetUserById(context.Context, *UserIdRequest) (*UserResponse, error)
+	GetAllUsers(context.Context, *Empty) (*UsersResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -112,6 +151,15 @@ func (UnimplementedUserServiceServer) DeleteAccount(context.Context, *UserIdRequ
 }
 func (UnimplementedUserServiceServer) EditAccount(context.Context, *EditUserRequest) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditAccount not implemented")
+}
+func (UnimplementedUserServiceServer) Logout(context.Context, *UserIdRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedUserServiceServer) GetUserById(context.Context, *UserIdRequest) (*UserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserById not implemented")
+}
+func (UnimplementedUserServiceServer) GetAllUsers(context.Context, *Empty) (*UsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllUsers not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -206,6 +254,60 @@ func _UserService_EditAccount_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).Logout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_Logout_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).Logout(ctx, req.(*UserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_GetUserById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetUserById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetUserById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetUserById(ctx, req.(*UserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_GetAllUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetAllUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetAllUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetAllUsers(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,7 +331,19 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "EditAccount",
 			Handler:    _UserService_EditAccount_Handler,
 		},
+		{
+			MethodName: "Logout",
+			Handler:    _UserService_Logout_Handler,
+		},
+		{
+			MethodName: "GetUserById",
+			Handler:    _UserService_GetUserById_Handler,
+		},
+		{
+			MethodName: "GetAllUsers",
+			Handler:    _UserService_GetAllUsers_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/user.proto",
+	Metadata: "user.proto",
 }
