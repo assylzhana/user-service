@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  user-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: user-service-go
+    ports:
+      - "50051:50051"  
+    environment:
+      POSTGRES_HOST: 46.101.215.10
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: me
+      POSTGRES_PASSWORD: myp4ssw0rd
+      POSTGRES_DB: master
+      JWT_SECRET: 52731f04f8cfd0312906a8098e9fe98fec6b01315484130fa52a7cf54a04930eccbd1b674e8111baf3c71a686f2c98010c5f411feb5c1dc22f05ded19cf8992d36ef9b55e086823fcd5758ea1210debf794350c02f3386b1ac5fa9f55a70f73c88e85cbbfc2a762f3ef9e58162f96f2aa2449bc1de1e1f17c3e9611cb44be53baac340f467a6c0d7cf5949fac152a285f47a7243f009c1a09019aa5869b399c4372402ac5ff165f018fb132f05253e3e4d2e1cb48c66136d9ced0eaef866832eebc267c65720e9348fd35e89da151ed15ae2bc905b5cfd4471a0deddc5c268e1869696f51dbe6fa7e76b5e7cba2c2186f378b71bcaad730cac6b16c525fcc4ce
+    restart: unless-stopped
