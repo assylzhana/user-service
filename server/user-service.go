@@ -161,6 +161,23 @@ func (s *UserServiceServer) GetUserById(ctx context.Context, req *proto.UserIdRe
 	return &user, nil
 }
 
+func (s *UserServiceServer) GetMyProfile(ctx context.Context, _ *emptypb.Empty) (*proto.UserResponse, error) {
+	claims, err := extractAndValidateToken(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var user proto.UserResponse
+	err = config.DB.QueryRow("SELECT id, username, email, role_id FROM users WHERE id=$1", claims.UserID).
+		Scan(&user.Id, &user.Username, &user.Email, &user.RoleId)
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "User not found")
+	}
+
+	log.Printf("[GET_MY_PROFILE] User ID=%d retrieved their profile", claims.UserID)
+	return &user, nil
+}
+
 func (s *UserServiceServer) GetAllUsers(ctx context.Context, _ *emptypb.Empty) (*proto.UsersResponse, error) {
 	claims, err := extractAndValidateToken(ctx)
 	if err != nil {

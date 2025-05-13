@@ -56,4 +56,5 @@ service UserService {
 
   rpc GetUserById(UserIdRequest) returns (UserResponse);
   rpc GetAllUsers(google.protobuf.Empty) returns (UsersResponse);
+  rpc GetMyProfile(google.protobuf.Empty) returns (UserResponse);
 }
